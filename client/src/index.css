@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+html {
+  background-color: #f5f6fa;
+}
 
 body {
   font-family: "Rubik" !important;
@@ -74,10 +77,12 @@ a.inactive:hover {
 
 aside {
   min-height: 100vh;
-  width: 60px;
+  width: 0px;
   overflow: hidden;
   background-color: #5b08a7;
   transition: all 0.3s ease;
+  position: absolute;
+  z-index: 999;
 }
 
 .flex {
@@ -85,9 +90,10 @@ aside {
 }
 
 table {
-  width: 100%;
+  /* width: 100%; */
   border-spacing: 0;
   border-collapse: collapse;
+  overflow-x: auto;
 }
 
 table > thead > tr > th {
@@ -99,7 +105,7 @@ table > thead > tr > th {
 table > tbody > tr > td {
   padding: 0.5rem 0.5rem;
   border-bottom: 1px solid #efefef;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .profile-avatar {
@@ -276,4 +282,10 @@ input:checked + .slider:before {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+#avatar {
+  all: revert;
+  border-radius: 50%;
+  border: 5px solid #333;
 }
