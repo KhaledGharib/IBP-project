@@ -20,6 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->boolean("role")->default(0);
+            $table->string('image', 255)->nullable();
         });
     }
 

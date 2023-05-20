@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\QuestionTypeEnum;
 use App\Http\Requests\StoreQuizAnswerRequest;
 use App\Http\Requests\StoreQuizRequest;
+use App\Http\Requests\UpdateQuizRequest;
 use App\Http\Resources\QuizResource;
 use App\Models\quiz;
 use App\Models\QuizQuestion;
@@ -167,7 +168,6 @@ class QuizController extends Controller
      *
      * @param $image
      * @throws \Exception
-     * @author Zura Sekhniashvili <zurasekhniashvili@gmail.com>
      */
     private function saveImage($image)
     {
@@ -210,7 +210,6 @@ class QuizController extends Controller
      * @param $data
      * @return mixed
      * @throws \Illuminate\Validation\ValidationException
-     * @author Zura Sekhniashvili <zurasekhniashvili@gmail.com>
      */
     private function createQuestion($data)
     {
@@ -237,7 +236,6 @@ class QuizController extends Controller
      * @param                            $data
      * @return bool
      * @throws \Illuminate\Validation\ValidationException
-     * @author Zura Sekhniashvili <zurasekhniashvili@gmail.com>
      */
     private function updateQuestion(QuizQuestion $question, $data)
     {
