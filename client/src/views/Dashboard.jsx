@@ -48,8 +48,10 @@ export default function Dashboard() {
             style={{ backgroundColor: "#fff" }}
           >
             <div className="d-flex justify-content-between align-items-center ">
-              <h3>Quizzes </h3>
-              <i className="bi bi-people-fill fs-3 bg-danger"></i>
+              <h3>Students </h3>
+              <div className="bg-dark p-1 rounded-bottom">
+                <i className="bi bi-people-fill fs-3 text-light"></i>
+              </div>
             </div>
             <p>65</p>
           </figure>
@@ -58,8 +60,10 @@ export default function Dashboard() {
             style={{ backgroundColor: "#fff" }}
           >
             <div className="d-flex justify-content-between align-items-center ">
-              <h3 className="pl-5">Student </h3>
-              <i className="bi bi-people-fill fs-3 bg-danger"></i>
+              <h3>Answers </h3>
+              <div className=" bg-dark p-1 rounded-bottom">
+                <i className="bi bi-file-earmark-fill fs-3 text-light"></i>
+              </div>
             </div>
             <p>65</p>
           </figure>
@@ -72,7 +76,9 @@ export default function Dashboard() {
           >
             <div className="d-flex justify-content-between align-items-center ">
               <h3>Quizzes </h3>
-              <i className="bi bi-people-fill fs-3 bg-danger"></i>
+              <div className="bg-dark p-1 rounded-bottom">
+                <i className="bi bi-puzzle-fill fs-3 text-light"></i>
+              </div>
             </div>
             <p>65</p>
           </figure>
@@ -81,8 +87,10 @@ export default function Dashboard() {
             style={{ backgroundColor: "#fff" }}
           >
             <div className="d-flex justify-content-between align-items-center ">
-              <h3 className="pl-5">Student </h3>
-              <i className="bi bi-people-fill fs-3 bg-danger"></i>
+              <h3>something here </h3>
+              <div className="bg-dark p-1 rounded-bottom">
+                <i className="bi bi-stars fs-3 text-light"></i>
+              </div>
             </div>
             <p>65</p>
           </figure>
