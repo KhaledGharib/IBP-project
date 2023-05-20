@@ -25,7 +25,7 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    axiosClient.get("/users").then(({ data }) => {
+    axiosClient.get("/profile").then(({ data }) => {
       setUser(data);
     });
   }, []);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/users', UserController::class);
 
     Route::apiResource('announcements', \App\Http\Controllers\AnnouncementController::class);
-    Route::get('/users', function (Request $request) {
+    Route::get('/profile', function (Request $request) {
         return $request->user();
     });
 });
