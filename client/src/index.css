@@ -288,4 +288,5 @@ input:checked + .slider:before {
   all: revert;
   border-radius: 50%;
   border: 5px solid #333;
+  width: 200px;
 }
