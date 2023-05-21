@@ -19,6 +19,8 @@ export default function Profile() {
     password: "",
     password_confirmation: "",
     role: "",
+    image: null,
+    image_url: null,
   });
 
   if (id) {
@@ -39,11 +41,37 @@ export default function Profile() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (user.id) {
-      axiosClient
-        .put(`/users/${user.id}`, user)
-        .then(() => {
-          toast.success("Updated", {
+    const payload = { ...user };
+    if (payload.image) {
+      payload.image = payload.image_url;
+    }
+    delete payload.image_url;
+    let res = null;
+    if (id) {
+      res = axiosClient.put(`/users/${id}`, payload);
+    } else {
+      res = axiosClient.post("/users", payload);
+    }
+
+    res
+      .then((res) => {
+        toast.success("Updated", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          pauseOnFocusLoss: false,
+          theme: "colored",
+        });
+      })
+      .catch((err) => {
+        const response = err.response;
+        if (response && response.status === 422) {
+          setErrors(response.data.errors);
+          toast.error("Something went wrong", {
             position: "bottom-right",
             autoClose: 2000,
             hideProgressBar: true,
@@ -54,48 +82,63 @@ export default function Profile() {
             pauseOnFocusLoss: false,
             theme: "colored",
           });
-          navigate("/users");
-        })
-        .catch((err) => {
-          const response = err.response;
-          if (response && response.status === 422) {
-            setErrors(response.data.errors);
-            toast.error("Something went wrong", {
-              position: "bottom-right",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              pauseOnFocusLoss: false,
-              theme: "colored",
-            });
-          }
-        });
-    } else {
-      axiosClient
-        .post(`/users`, user)
-        .then(() => {
-          setMessage("Created");
-        })
-        .catch((err) => {
-          const response = err.response;
-          if (response && response.status === 422) {
-            setErrors(response.data.errors);
-          }
-        });
-    }
+        }
+      });
+  };
+
+  const onImageChoose = (e) => {
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setUser({
+        ...user,
+        image: file,
+        image_url: reader.result,
+      });
+
+      e.target.value = "";
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
     <div className=" container w-50 p-2 rounded-2 shadow d-flex flex-column gap-5 justify-content-between align-items-center">
-      <div className="d-flex justify-content-center">
-        <img
-          className="profile-avatar"
-          src="../../img/photo-1510227272981-87123e259b17.jpeg"
-        />
+      {/*Image */}
+
+      <div>
+        <label className="">Avatar</label>
+        <div className="mt-1 d-flex align-items-center justify-content-center">
+          <div className="d-flex align-items-center justify-content-center">
+            {user.image_url && (
+              <img id="avatar" src={user.image_url} className="" />
+            )}
+            {!user.image_url && (
+              <span className="d-flex justify-content-center align-items-center ">
+                <i className="bi bi-image fs-1 "></i>
+              </span>
+            )}
+          </div>
+          <div className="input-group ms-5">
+            <label
+              className="input-group-text rounded-1 btn btn-secondary"
+              htmlFor="image"
+              style={{ cursor: "pointer" }}
+            >
+              Change
+            </label>
+            <input
+              id="image"
+              name="image"
+              type="file"
+              className=" form-control d-none"
+              onChange={onImageChoose}
+            />
+          </div>
+        </div>
       </div>
+      {/*Image */}
+
       {loading && <div className="text-center">Loading...</div>}
       {errors && (
         <div className="alert">

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet, useParams } from "react-router-dom";
 import { useStateContext } from "../../context/useStateContext";
 import axiosClient from "../axios-client.js";
 export default function Layout() {
   const { token, setToken, setUser, user } = useStateContext();
   const [announcements, setAnnouncements] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axiosClient
@@ -29,6 +30,23 @@ export default function Layout() {
       setUser(data);
     });
   }, []);
+  let { id } = useParams();
+
+  if (id) {
+    useEffect(() => {
+      setLoading(true);
+      axiosClient
+        .get(`/users/${id}`)
+        .then(({ data }) => {
+          setLoading(false);
+
+          setUser(data);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }, []);
+  }
 
   if (!token) {
     return <Navigate to="/login" />;
@@ -55,7 +73,7 @@ export default function Layout() {
               <i className="bi bi-list"></i>
               <i className="bi bi-x-lg"></i>
             </button>
-            <h1 className="text-light">Qlap</h1>
+            <h1 className="text-light">Qlab</h1>
           </div>
           <div className="d-flex align-items-center gap-3 text-light">
             <Link to="/announcement" className="btn btn-info">
@@ -63,7 +81,9 @@ export default function Layout() {
             </Link>
             <div className="dropdown">
               <div className="dropbtn">
-                <img src="../../img/photo-1510227272981-87123e259b17.jpeg" />
+                {user.image_url && (
+                  <img src={user.image_url} className="profile-avatar" />
+                )}
               </div>
               <div className="dropdown-content">
                 <Link to={`/profile/${user.id}`}>Profile</Link>
