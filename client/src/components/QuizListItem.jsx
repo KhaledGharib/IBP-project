@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 export default function QuizListItem({ quiz, onDeleteClick }) {
   return (
-    <div className="d-flex overflow-hidden align-content-center animated fadeInDown shadow rounded bg-light">
+    <div className="container d-flex overflow-hidden align-content-center animated fadeInDown shadow rounded bg-light">
       <div className="d-flex gap-3 align-items-center">
         <img src={quiz.image_url} className="w-25" />
         <h4 className="text-center">{quiz.title}</h4>

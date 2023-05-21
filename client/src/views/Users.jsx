@@ -41,7 +41,7 @@ export default function Users() {
   };
 
   return (
-    <>
+    <div className="container">
       <div className="d-flex justify-content-between">
         <h1>Users</h1>
         <div className="d-flex gap-2">
@@ -113,6 +113,6 @@ export default function Users() {
           )}
         </table>
       </div>
-    </>
+    </div>
   );
 }

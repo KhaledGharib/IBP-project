@@ -90,7 +90,7 @@ export default function QuizView() {
   }, []);
 
   return (
-    <>
+    <div className="container">
       {loading && <p>loading</p>}
       {!loading && (
         <form action="#" method="POST" onSubmit={onSubmit}>
@@ -223,6 +223,6 @@ export default function QuizView() {
           </div>
         </form>
       )}
-    </>
+    </div>
   );
 }

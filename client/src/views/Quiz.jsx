@@ -12,7 +12,7 @@ export default function Quiz() {
   console.log(quizzes);
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center animated fadeInDown ">
+      <div className="d-flex container justify-content-between align-items-center animated fadeInDown ">
         <h1>Quiz</h1>
         <NavLink to="create" className="btn btn-success">
           Create new quiz
