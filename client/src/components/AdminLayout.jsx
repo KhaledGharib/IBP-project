@@ -2,54 +2,75 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, Navigate, Outlet, useParams } from "react-router-dom";
 import { useStateContext } from "../../context/useStateContext";
 import axiosClient from "../axios-client.js";
+
 export default function Layout() {
   const { token, setToken, setUser, user } = useStateContext();
   const [announcements, setAnnouncements] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
 
   useEffect(() => {
-    axiosClient
-      .get("/announcements")
-      .then(({ data }) => {
+    const fetchAnnouncements = async (token) => {
+      try {
+        const { data } = await axiosClient.get("/announcements");
         setAnnouncements(data.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching announcements:", error);
-      });
+      }
+    };
+
+    if (token) {
+      fetchAnnouncements(token);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const { data } = await axiosClient.get("/profile");
+        setUser(data);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
   }, []);
-  const onLogout = (e) => {
+
+  useEffect(() => {
+    const getAvatar = () => {
+      if (id) {
+        axiosClient
+          .get(`/users/${id}`)
+          .then(({ data }) => {
+            setUser(data);
+          })
+          .catch(() => {});
+      }
+    };
+
+    getAvatar();
+  }, [id]);
+
+  // // Logging the user value separately to ensure it reflects the latest state
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
+
+  const onLogout = async (e) => {
     e.preventDefault();
-    axiosClient.post("logout").then(() => {
+    try {
+      await axiosClient.post("logout");
       setUser(null);
       setToken(null);
-    });
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
-
-  useEffect(() => {
-    axiosClient.get("/profile").then(({ data }) => {
-      setUser(data);
-    });
-  }, []);
-  let { id } = useParams();
-
-  if (id) {
-    useEffect(() => {
-      setLoading(true);
-      axiosClient
-        .get(`/users/${id}`)
-        .then(({ data }) => {
-          setLoading(false);
-
-          setUser(data);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
-    }, []);
-  }
-
   if (!token) {
     return <Navigate to="/login" />;
+  }
+  if (user.role === 0) {
+    return <Navigate to={`/student/myquizzes`} />;
   }
 
   const handleOpen = () => {
@@ -81,8 +102,17 @@ export default function Layout() {
             </Link>
             <div className="dropdown">
               <div className="dropbtn">
-                {user.image_url && (
-                  <img src={user.image_url} className="profile-avatar" />
+                {user.image && (
+                  <img
+                    src={`${import.meta.env.VITE_API_BASE_URL}/${user.image}`}
+                    className="profile-avatar"
+                  />
+                )}
+
+                {!user.image && (
+                  <span className="d-flex justify-content-center align-items-center ">
+                    <i className="bi bi-person-fill fs-1 "></i>
+                  </span>
                 )}
               </div>
               <div className="dropdown-content">
@@ -163,7 +193,7 @@ export default function Layout() {
           </div>
         </aside>
 
-        <main className="p-3 w-100" style={{ backgroundColor: "#f5f6fa" }}>
+        <main className=" w-100" style={{ backgroundColor: "#f5f6fa" }}>
           <Outlet />
         </main>
       </div>

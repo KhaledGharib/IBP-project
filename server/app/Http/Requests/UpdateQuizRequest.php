@@ -15,7 +15,7 @@ class UpdateQuizRequest extends FormRequest
     {
         $Quiz = $this->route('quiz');
 
-        if ($this->user()->id !== $Quiz->user_id) {
+        if ($this->user()->id !== $Quiz->owner_id) {
             return false;
         }
         return true;
@@ -31,7 +31,7 @@ class UpdateQuizRequest extends FormRequest
         return [
             'title' => 'required|string|max:1000',
             'image' => 'string',
-            'user_id' => 'exists:users,id',
+            'owner_id' => 'exists:users,id',
             'status' => 'required|boolean',
             'description' => 'nullable|string',
             'expire_date' => 'nullable|date|after:today',

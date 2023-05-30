@@ -33,7 +33,7 @@ class QuizController extends Controller
         $user = $request->user();
 
         return QuizResource::collection(
-            Quiz::where('user_id', $user->id)
+            Quiz::where('owner_id', $user->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(2)
         );
@@ -75,7 +75,7 @@ class QuizController extends Controller
     public function show(Quiz $quiz, Request $request)
     {
         $user = $request->user();
-        if ($user->id !== $quiz->user_id) {
+        if ($user->id !== $quiz->owner_id) {
             return abort(403, 'Unauthorized action');
         }
         return new QuizResource($quiz);
@@ -104,7 +104,7 @@ class QuizController extends Controller
             }
         }
 
-        // Update survey in the database
+        // Update quiz in the database
         $quiz->update($data);
 
         // Get ids as plain array of existing questions
@@ -147,7 +147,7 @@ class QuizController extends Controller
     public function destroy(Quiz $quiz, Request $request)
     {
         $user = $request->user();
-        if ($user->id !== $quiz->user_id) {
+        if ($user->id !== $quiz->owner_id) {
             return abort(403, 'Unauthorized action.');
         }
 

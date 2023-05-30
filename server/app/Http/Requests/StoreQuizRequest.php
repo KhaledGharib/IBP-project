@@ -19,7 +19,7 @@ class StoreQuizRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => $this->user()->id
+            'owner_id' => $this->user()->id
         ]);
     }
 
@@ -33,7 +33,7 @@ class StoreQuizRequest extends FormRequest
         return [
             'title' => 'required|string|max:1000',
             'image' => 'nullable|string',
-            'user_id' => 'exists:users,id',
+            'owner_id' => 'exists:users,id',
             'status' => 'required|boolean',
             'description' => 'nullable|string',
             'expire_date' => 'nullable|date|after:today',

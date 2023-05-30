@@ -42,7 +42,7 @@ export default function AnnouncementView() {
   };
 
   return (
-    <div className="p-1 animated fadeInDown mt-5">
+    <div className="p-1 container animated fadeInDown mt-5">
       <h1>Announcement View</h1>
 
       <div className="shadow rounded-3 mt-3 animated fadeInDown">

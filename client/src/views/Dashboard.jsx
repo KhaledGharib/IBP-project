@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axiosClient from "../axios-client";
 import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
 import { AttendData, UserData } from "../components/UserData";
 export default function Dashboard() {
+  const [quizzes, setQuiz] = useState([]);
+  const [user, setUsers] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+
   const [data, setData] = useState({
     labels: UserData.map((data) => data.year),
     datasets: [
@@ -37,6 +44,62 @@ export default function Dashboard() {
       },
     ],
   });
+  // ===============================
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = () => {
+    setLoading(true);
+
+    axiosClient
+      .get("/users")
+      .then(({ data }) => {
+        setLoading(false);
+
+        setUsers(data.data);
+
+        const usersWithRoleZero = data.data.filter((user) => user.role === 0);
+        const userLengthWithRoleZero = usersWithRoleZero.length;
+        console.log(userLengthWithRoleZero);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
+  const getQuizzes = (url) => {
+    url = url || "/quiz";
+    setLoading(true);
+    axiosClient.get(url).then(({ data }) => {
+      setQuiz(data.data);
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    getQuizzes();
+  }, []);
+
+  useEffect(() => {
+    getAnnouncements();
+  }, []);
+
+  const getAnnouncements = () => {
+    setLoading(true);
+
+    axiosClient
+      .get("/announcements")
+      .then(({ data }) => {
+        setLoading(false);
+        setAnnouncements(data.data);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
+  // ===============================
 
   return (
     <div className="container">
@@ -53,7 +116,16 @@ export default function Dashboard() {
                 <i className="bi bi-people-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p>65</p>
+
+            {
+              <div>
+                {
+                  <p className=" bold text-center text-dark fs-3">
+                    {user.length}
+                  </p>
+                }
+              </div>
+            }
           </figure>
           <figure
             className=" shadow container-fluid rounded h-100"
@@ -80,19 +152,21 @@ export default function Dashboard() {
                 <i className="bi bi-puzzle-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p>65</p>
+            <p className=" bold text-center text-dark fs-3">{quizzes.length}</p>
           </figure>
           <figure
             className=" shadow  container-fluid rounded h-100"
             style={{ backgroundColor: "#fff" }}
           >
             <div className="d-flex justify-content-between align-items-center ">
-              <h3>something here </h3>
+              <h3>Announcements </h3>
               <div className="bg-dark p-1 rounded-bottom">
-                <i className="bi bi-stars fs-3 text-light"></i>
+                <i className="bi bi-megaphone-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p>65</p>
+            <p className=" bold text-center text-dark fs-3">
+              {announcements.length}
+            </p>
           </figure>
         </div>
         <figure

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class, 'user_id');
+            $table->foreignIdFor(\App\Models\User::class, 'owner_id');
             $table->string('image', 255)->nullable();
             $table->string('title', 1000);
             $table->string('slug', 1000);

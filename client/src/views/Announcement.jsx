@@ -6,7 +6,7 @@ import AnnouncementView from "../components/AnnouncementView";
 
 export default function Announcement() {
   const titleRef = useRef();
-  const { announcement, setAnnouncement } = useStateContext();
+  const { announcement, setAnnouncement, user } = useStateContext();
 
   setTimeout(() => {
     let slideElement = document.getElementById("slide");
@@ -38,6 +38,7 @@ export default function Announcement() {
     e.preventDefault();
     const payload = {
       title: titleRef.current.value,
+      user_name: user.name,
     };
     axiosClient
       .post("/announcements", payload)
@@ -55,6 +56,7 @@ export default function Announcement() {
           pauseOnFocusLoss: false,
           theme: "colored",
         });
+        console.log(payload);
       })
       .catch((err) => {
         const response = err.response;
@@ -76,16 +78,14 @@ export default function Announcement() {
 
   return (
     <>
-      <div className="card shadow p-1 animated fadeInDown   ">
+      <div className=" p-3 shadow p-1 animated fadeInDown   ">
         <div className="d-flex align-items-center justify-content-between">
           <span className="fs-4">Add new announcement</span>
           <div className="d-flex gap-2  align-items-center">
-            <span>Off</span>
             <label className="switch">
               <input id="slide" type="checkbox" />
               <span onClick={slider} className="slider round"></span>
             </label>
-            <span>On</span>
           </div>
         </div>
         <div id="cont" className="cont">

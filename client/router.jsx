@@ -2,18 +2,20 @@ import { createBrowserRouter } from "react-router-dom";
 import AdminLayout from "./src/components/AdminLayout";
 import AnnouncementView from "./src/components/AnnouncementView";
 import GuestLayout from "./src/components/GuestLayout";
+import StudentAnnouncementView from "./src/components/StudentAnnouncementView";
 import UserLayout from "./src/components/UserLayout";
 import Announcement from "./src/views/Announcement";
 import Chat from "./src/views/Chat";
 import Dashboard from "./src/views/Dashboard";
 import Login from "./src/views/Login";
 import PageNotFound from "./src/views/PageNotFound";
-import Profile from "./src/views/profile";
 import Quiz from "./src/views/Quiz";
 import QuizView from "./src/views/QuizView";
 import Signup from "./src/views/Signup";
+import StudentQuiz from "./src/views/StudentQuiz";
 import UserForm from "./src/views/UserForm";
 import Users from "./src/views/Users";
+import Profile from "./src/views/profile";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
         element: <UserForm key="userCreate" />,
       },
       {
-        path: "/users/:id",
+        path: "/users/edit/:id",
         element: <UserForm key="userUpdate" />,
       },
       {
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/quizzes/create",
+        element: <QuizView />,
+      },
+      {
+        path: "/quiz/:id",
         element: <QuizView />,
       },
       {
@@ -62,8 +68,16 @@ const router = createBrowserRouter([
     element: <UserLayout />,
     children: [
       {
-        path: "inbox",
-        element: <AnnouncementView />,
+        path: "Announcement",
+        element: <StudentAnnouncementView />,
+      },
+      {
+        path: "myquizzes",
+        element: <StudentQuiz />,
+      },
+      {
+        path: "profile/:id",
+        element: <Profile />,
       },
     ],
   },

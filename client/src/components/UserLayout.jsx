@@ -1,21 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet, useParams } from "react-router-dom";
 import { useStateContext } from "../../context/useStateContext";
 import axiosClient from "../axios-client";
 export default function UserLayout() {
   const [announcements, setAnnouncements] = useState([]);
   const { token, setToken, setUser, user } = useStateContext();
+  const { id } = useParams();
 
   useEffect(() => {
-    axiosClient
-      .get("/announcements")
-      .then(({ data }) => {
+    const fetchAnnouncements = async (token) => {
+      try {
+        const { data } = await axiosClient.get("/announcements");
         setAnnouncements(data.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching announcements:", error);
-      });
+      }
+    };
+
+    if (token) {
+      fetchAnnouncements(token);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const { data } = await axiosClient.get("/profile");
+        setUser(data);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
   }, []);
+
+  useEffect(() => {
+    const getAvatar = () => {
+      if (id) {
+        axiosClient
+          .get(`/users/${id}`)
+          .then(({ data }) => {
+            setUser(data);
+          })
+          .catch(() => {});
+      }
+    };
+
+    getAvatar();
+  }, [id]);
 
   const onLogout = (e) => {
     e.preventDefault();
@@ -51,10 +84,32 @@ export default function UserLayout() {
             </button>
             <h1 className="text-light">qlap</h1>
           </div>
-          <div className="">
-            <Link to="/announcement" className="btn btn-info">
+          <div className="d-flex align-items-center gap-3 text-light">
+            <Link to="announcement" className="btn btn-info">
               {announcements.length}
             </Link>
+            <div className="dropdown">
+              <div className="dropbtn">
+                {user.image && (
+                  <img
+                    src={`${import.meta.env.VITE_API_BASE_URL}/${user.image}`}
+                    className="profile-avatar"
+                  />
+                )}
+
+                {!user.image && (
+                  <span className="d-flex justify-content-center align-items-center ">
+                    <i className="bi bi-person-fill fs-1 "></i>
+                  </span>
+                )}
+              </div>
+              <div className="dropdown-content rounded">
+                <Link to={`profile/${user.id}`}>Profile</Link>
+                <Link to="#" onClick={onLogout} className="btn-logout">
+                  logout
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -64,7 +119,7 @@ export default function UserLayout() {
           <div className="nav-item gap-3 d-flex flex-column ">
             <NavLink
               className={({ isActive }) => (isActive ? "isActive" : "inactive")}
-              to="/student"
+              to="myquizzes"
             >
               <i className="bi bi-puzzle-fill" style={{ fontSize: "2rem" }}></i>
               Quizzes
@@ -81,6 +136,16 @@ export default function UserLayout() {
               ></i>
               Chat
             </NavLink>
+            <NavLink
+              className={({ isActive }) => (isActive ? "isActive" : "inactive")}
+              to="announcement"
+            >
+              <i
+                className="bi bi-megaphone-fill"
+                style={{ fontSize: "2rem" }}
+              ></i>
+              Announcement
+            </NavLink>
             <NavLink className="inactive mt-5" onClick={onLogout}>
               <i
                 className="bi bi-door-open-fill"
@@ -91,7 +156,7 @@ export default function UserLayout() {
           </div>
         </aside>
 
-        <main className="p-3 w-100" style={{ backgroundColor: "#f5f6fa" }}>
+        <main className=" w-100" style={{ backgroundColor: "#f5f6fa" }}>
           <Outlet />
         </main>
       </div>
