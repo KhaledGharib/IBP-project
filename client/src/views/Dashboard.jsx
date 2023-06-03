@@ -58,15 +58,13 @@ export default function Dashboard() {
         setLoading(false);
 
         setUsers(data.data);
-
-        const usersWithRoleZero = data.data.filter((user) => user.role === 0);
-        const userLengthWithRoleZero = usersWithRoleZero.length;
-        console.log(userLengthWithRoleZero);
       })
       .catch(() => {
         setLoading(false);
       });
   };
+
+  const filteredUsers = user.filter((user) => user.role === 0);
 
   const getQuizzes = (url) => {
     url = url || "/quiz";
@@ -121,7 +119,7 @@ export default function Dashboard() {
               <div>
                 {
                   <p className=" bold text-center text-dark fs-3">
-                    {user.length}
+                    {filteredUsers.length}
                   </p>
                 }
               </div>
