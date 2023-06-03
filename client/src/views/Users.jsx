@@ -3,8 +3,9 @@ import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../context/useStateContext";
 import axiosClient from "../axios-client";
+
 export default function Users() {
-  const [user, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setMessage } = useStateContext();
   const [search, setSearch] = useState("");
@@ -15,25 +16,26 @@ export default function Users() {
     }
     axiosClient.delete(`/users/${user.id}`).then(() => {
       setMessage("deleted");
-      getUser();
+      getUsers();
     });
   };
-  const filteredUsers = user.filter((u) => u.id.toString().includes(search));
+
+  const filteredUsers = users.filter(
+    (user) => user.role === 0 && user.id.toString().includes(search)
+  );
 
   useEffect(() => {
-    getUser();
+    getUsers();
   }, []);
 
-  const getUser = () => {
+  const getUsers = () => {
     setLoading(true);
 
     axiosClient
       .get("/users")
       .then(({ data }) => {
         setLoading(false);
-
         setUsers(data.data);
-        console.log(data.data[0].role);
       })
       .catch(() => {
         setLoading(false);
@@ -61,8 +63,8 @@ export default function Users() {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>name</th>
-                <th>email</th>
+                <th>Name</th>
+                <th>Email</th>
                 <th>Create Date</th>
                 <th>Actions</th>
               </tr>
