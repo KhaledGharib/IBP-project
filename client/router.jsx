@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
+import AccessUsers from "./src/components/AccessUsers";
 import AdminLayout from "./src/components/AdminLayout";
 import AnnouncementView from "./src/components/AnnouncementView";
+import ChatPanel from "./src/components/ChatPanel";
 import GuestLayout from "./src/components/GuestLayout";
 import StudentAnnouncementView from "./src/components/StudentAnnouncementView";
 import UserLayout from "./src/components/UserLayout";
@@ -13,6 +15,7 @@ import Quiz from "./src/views/Quiz";
 import QuizView from "./src/views/QuizView";
 import Signup from "./src/views/Signup";
 import StudentQuiz from "./src/views/StudentQuiz";
+import StudentQuizView from "./src/views/StudentQuizView";
 import UserForm from "./src/views/UserForm";
 import Users from "./src/views/Users";
 import Profile from "./src/views/profile";
@@ -39,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/chat",
-        element: <Chat />,
+        element: <ChatPanel />,
       },
       {
         path: "/quizzes",
@@ -58,8 +61,16 @@ const router = createBrowserRouter([
         element: <Announcement />,
       },
       {
+        path: "/quizzes/access-users/:slug",
+        element: <AccessUsers />,
+      },
+      {
         path: "/profile/:id",
         element: <Profile />,
+      },
+      {
+        path: "/quiz/public/:slug",
+        element: <StudentQuizView />,
       },
     ],
   },
@@ -93,6 +104,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/quiz/public/:slug",
+        element: <StudentQuizView />,
       },
     ],
   },

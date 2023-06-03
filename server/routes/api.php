@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('quiz', QuizController::class);
     Route::apiResource('/users', UserController::class);
+    Route::get('/quiz/get-by-slug/{quiz:slug}', [QuizController::class, 'getBySlug']);
+    Route::post('/quiz/{quiz}/answer', [QuizController::class, 'storeAnswer']);
 
     Route::apiResource('announcements', \App\Http\Controllers\AnnouncementController::class);
     Route::get('/profile', function (Request $request) {
@@ -31,5 +33,3 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/quiz/get-by-slug/{survey:slug}', [QuizController::class, 'getBySlug']);
-Route::post('/quiz/{quiz}/answer', [QuizController::class, 'storeAnswer']);

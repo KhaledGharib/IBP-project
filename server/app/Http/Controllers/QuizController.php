@@ -33,9 +33,10 @@ class QuizController extends Controller
         $user = $request->user();
 
         return QuizResource::collection(
-            Quiz::where('owner_id', $user->id)
-                ->orderBy('created_at', 'desc')
-                ->paginate(2)
+            Quiz::where(function ($query) use ($user) {
+                $query->where('owner_id', $user->id)
+                    ->orWhereJsonContains('access_users', $user->id);
+            })->orderBy('created_at', 'desc')->get()
         );
     }
 
@@ -102,6 +103,10 @@ class QuizController extends Controller
                 $absolutePath = public_path($quiz->image);
                 File::delete($absolutePath);
             }
+        }
+
+        if (isset($data['access_users'])) {
+            $quiz->access_users = json_encode($data['access_users']);
         }
 
         // Update quiz in the database

@@ -14,9 +14,9 @@ export default function QuizListItem({ quiz, onDeleteClick }) {
       </div>
 
       <div className="d-flex justify-content-between align-items-center">
-        <i className="bi bi-play-fill btn btn-dark">
-          <a href={`/view/quiz/${quiz.slug}`}></a>
-        </i>
+        <a href={`/quiz/public/${quiz.slug}`}>
+          <i className="bi bi-play-fill btn btn-dark"></i>
+        </a>
       </div>
     </div>
   );

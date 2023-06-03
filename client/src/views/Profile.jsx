@@ -164,6 +164,7 @@ export default function Profile() {
           <div>
             <label>Role</label>
             <select
+              disabled
               value={user.role}
               onChange={(e) => setUser({ ...user, role: e.target.value })}
             >

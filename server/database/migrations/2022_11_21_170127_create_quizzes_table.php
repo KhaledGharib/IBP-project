@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug', 1000);
             $table->tinyInteger('status');
             $table->text('description')->nullable();
+            $table->json('access_users')->nullable(); // New column to store the user IDs with access
             $table->timestamps();
             $table->timestamp('expire_date')->nullable();
         });

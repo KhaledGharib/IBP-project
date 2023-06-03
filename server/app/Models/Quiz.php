@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class quiz extends Model
+class Quiz extends Model
 {
     use HasFactory;
     use HasSlug;
 
-    protected $fillable = ['title', 'description', 'expire_date', 'image', 'owner_id', 'status', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'title',
+        'description',
+        'expire_date',
+        'image',
+        'owner_id',
+        'status',
+        'created_at',
+        'updated_at',
+        'access_users'
+    ];
 
     /**
      * Get the options for generating the slug.

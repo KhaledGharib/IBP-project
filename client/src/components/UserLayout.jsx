@@ -57,6 +57,7 @@ export default function UserLayout() {
       setToken(null);
     });
   };
+
   if (!token) {
     return <Navigate to="/login" />;
   }
