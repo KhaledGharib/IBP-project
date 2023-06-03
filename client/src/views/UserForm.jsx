@@ -66,11 +66,13 @@ export default function UserForm() {
   };
   return (
     <>
-      {user.id && <h1>Update User: {user.name}</h1>}
-      {!user.id && <h1>New User</h1>}
+      <div className="bg-light shadow container-fluid p-2">
+        {user.id && <h1>Update User: {user.name}</h1>}
+        {!user.id && <h1>New User</h1>}
+      </div>
       <div
         style={{ backgroundColor: "#fff" }}
-        className="shadow rounded-2 p-3 animated fadeInDown"
+        className="container mt-5  shadow rounded-2 p-3 animated fadeInDown"
       >
         {loading && <div className="text-center">Loading...</div>}
         {errors && (
@@ -97,6 +99,7 @@ export default function UserForm() {
             <div>
               <label>Role</label>
               <select
+                disabled
                 value={user.role}
                 onChange={(e) => setUser({ ...user, role: e.target.value })}
               >
