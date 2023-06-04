@@ -30,13 +30,6 @@ export default function SurveyPublicView() {
       });
   }, []);
 
-  useEffect(() => {
-    axiosClient.get(`quiz/get-by-slug/${slug}`).then(({ data }) => {
-      setResult(data);
-      console.log(result);
-    });
-  });
-
   function answerChanged(question, value) {
     answers[question.id] = value;
     console.log(question, value);
