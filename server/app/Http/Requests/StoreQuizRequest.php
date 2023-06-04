@@ -36,7 +36,7 @@ class StoreQuizRequest extends FormRequest
             'owner_id' => 'exists:users,id',
             'status' => 'required|boolean',
             'description' => 'nullable|string',
-            'expire_date' => 'nullable|date|after:today',
+            'expire_date' => 'required|date|after:today',
             'questions' => 'array',
         ];
     }

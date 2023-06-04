@@ -159,14 +159,14 @@ textarea:focus {
 .cont {
   height: 0;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 .contan {
   display: flex;
 }
 .isOpen {
-  height: 100px;
+  height: 500px;
 }
 .switch {
   position: relative;
@@ -340,3 +340,7 @@ input:checked + .slider:before {
 }
 
 /* ========================= */
+.table-container {
+  max-height: 200px; /* Adjust the desired height */
+  overflow-y: auto;
+}

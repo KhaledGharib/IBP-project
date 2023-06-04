@@ -84,9 +84,6 @@ export default function AnnouncementView() {
                       >
                         <i className="bi bi-trash3-fill"></i>
                       </button>
-                      <NavLink to={`/access-users/${announcement.title}`}>
-                        <i className="bi bi-person-fill-add btn btn-success"></i>
-                      </NavLink>
                     </div>
                   </td>
                 </tr>

@@ -17,6 +17,7 @@ class QuizAnswerResource extends JsonResource
         return [
             'id' => $this->id,
             'quiz' => new QuizResource($this->quiz),
+            'result' => $this->result,
             'end_date' => $this->end_date
         ];
     }

@@ -13,6 +13,7 @@ export default function SurveyPublicView() {
   });
   const [loading, setLoading] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [result, setResult] = useState(0);
   const [countdown, setCountdown] = useState(5);
   const { slug } = useParams();
 
@@ -28,6 +29,13 @@ export default function SurveyPublicView() {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    axiosClient.get(`quiz/get-by-slug/${slug}`).then(({ data }) => {
+      setResult(data);
+      console.log(result);
+    });
+  });
 
   function answerChanged(question, value) {
     answers[question.id] = value;

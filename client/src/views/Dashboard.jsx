@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axiosClient from "../axios-client";
 import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
-import Chat from "./Chat";
 import { AttendData, UserData } from "../components/UserData";
+import Chat from "./Chat";
 export default function Dashboard() {
   const [quizzes, setQuiz] = useState([]);
   const [user, setUsers] = useState([]);
@@ -104,90 +104,85 @@ export default function Dashboard() {
     <div className="container">
       <h1>Dashboard</h1>
       <div className="row">
-        <div className="col  d-flex flex-column animated fadeInDown ">
-          <figure
-            className=" shadow  container-fluid rounded h-100 "
+        <div className="col-md-6 col-lg-3 animated fadeInDown">
+          <div
+            className="shadow container-fluid rounded"
             style={{ backgroundColor: "#fff" }}
           >
-            <div className="d-flex justify-content-between align-items-center ">
-              <h3>Students </h3>
+            <div className="d-flex justify-content-between align-items-center">
+              <h3>Students</h3>
               <div className="bg-dark p-1 rounded-bottom">
                 <i className="bi bi-people-fill fs-3 text-light"></i>
               </div>
             </div>
-
-            {
-              <div>
-                {
-                  <p className=" bold text-center text-dark fs-3">
-                    {filteredUsers.length}
-                  </p>
-                }
-              </div>
-            }
-          </figure>
-          <figure
-            className=" shadow container-fluid rounded h-100"
+            <p className="bold text-center text-dark fs-3">
+              {filteredUsers.length}
+            </p>
+          </div>
+        </div>
+        <div className="col-md-6 col-lg-3 animated fadeInDown">
+          <div
+            className="shadow container-fluid rounded"
             style={{ backgroundColor: "#fff" }}
           >
-            <div className="d-flex justify-content-between align-items-center ">
-              <h3>Answers </h3>
-              <div className=" bg-dark p-1 rounded-bottom">
+            <div className="d-flex justify-content-between align-items-center">
+              <h3>Answers</h3>
+              <div className="bg-dark p-1 rounded-bottom">
                 <i className="bi bi-file-earmark-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p>65</p>
-          </figure>
+            <p className="bold text-center text-dark fs-3">{quizzes.length}</p>
+          </div>
         </div>
-
-        <div className="col d-flex flex-column animated fadeInDown ">
-          <figure
-            className=" shadow  container-fluid rounded h-100"
+        <div className="col-md-6 col-lg-3 animated fadeInDown">
+          <div
+            className="shadow container-fluid rounded"
             style={{ backgroundColor: "#fff" }}
           >
-            <div className="d-flex justify-content-between align-items-center ">
-              <h3>Quizzes </h3>
+            <div className="d-flex justify-content-between align-items-center">
+              <h3>Quizzes</h3>
               <div className="bg-dark p-1 rounded-bottom">
                 <i className="bi bi-puzzle-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p className=" bold text-center text-dark fs-3">{quizzes.length}</p>
-          </figure>
-          <figure
-            className=" shadow  container-fluid rounded h-100"
+            <p className="bold text-center text-dark fs-3">{quizzes.length}</p>
+          </div>
+        </div>
+        <div className="col-md-6 col-lg-3 animated fadeInDown">
+          <div
+            className="shadow container-fluid rounded"
             style={{ backgroundColor: "#fff" }}
           >
-            <div className="d-flex justify-content-between align-items-center ">
-              <h3>Announcements </h3>
+            <div className="d-flex justify-content-between align-items-center">
+              <h3>Announcements</h3>
               <div className="bg-dark p-1 rounded-bottom">
                 <i className="bi bi-megaphone-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p className=" bold text-center text-dark fs-3">
+            <p className="bold text-center text-dark fs-3">
               {announcements.length}
             </p>
-          </figure>
+          </div>
         </div>
-        <figure
-          className=" shadow rounded p-1 col-4 animated fadeInDown"
-          style={{ backgroundColor: "#fff" }}
-        >
-          <h3>AVG marks</h3>
-          <BarChart chartData={data} />
-        </figure>
       </div>
-      <div
-        className="row gap-4 mt-3
-      mb-5"
-      >
-        <div className="col shadow rounded-2">
+      <div className="row mt-3 mb-5">
+        <div className="col-md-6 mb-4">
+          <div className="shadow rounded-2 p-1 animated fadeInDown">
+            <h3>AVG marks</h3>
+            <BarChart chartData={data} />
+          </div>
+        </div>
+        <div className="col-md-6 mb-4">
+          <div className="shadow rounded-2 p-1 animated fadeInDown">
+            <h3>Attendance chart</h3>
+            <PieChart chartData={attendData} />
+          </div>
+        </div>
+      </div>
+      <div className="row" style={{ backgroundColor: "#fff" }}>
+        <div className="col-12">
           <h3>Chat box</h3>
           <Chat />
-        </div>
-        <div className="col shadow rounded-2">
-          <h3>Attendance chart</h3>
-
-          <PieChart chartData={attendData} />
         </div>
       </div>
     </div>

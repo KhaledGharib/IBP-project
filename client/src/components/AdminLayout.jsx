@@ -69,9 +69,9 @@ export default function Layout() {
   if (!token) {
     return <Navigate to="/login" />;
   }
-  if (user.role === 0) {
-    return <Navigate to={`/student/myquizzes`} />;
-  }
+  // if (user.role === 0) {
+  //   return <Navigate to={`/student/myquizzes`} />;
+  // }
 
   const handleOpen = () => {
     const aside = document.querySelector("aside");

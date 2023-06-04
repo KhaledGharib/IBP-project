@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AccessUsers from "./src/components/AccessUsers";
 import AdminLayout from "./src/components/AdminLayout";
-import AnnouncementAccessUsers from "./src/components/AnnouncementAccessUsers";
 import GuestLayout from "./src/components/GuestLayout";
 import StudentAnnouncementView from "./src/components/StudentAnnouncementView";
 import UserLayout from "./src/components/UserLayout";
@@ -58,10 +57,6 @@ const router = createBrowserRouter([
       {
         path: "/announcement",
         element: <Announcement />,
-      },
-      {
-        path: "/access-users/:title",
-        element: <AnnouncementAccessUsers />,
       },
       {
         path: "/quizzes/access-users/:slug",

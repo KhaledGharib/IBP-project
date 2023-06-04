@@ -15,7 +15,12 @@ class StoreQuizAnswerRequest extends FormRequest
     {
         return true;
     }
-
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'attempted_id' => $this->user()->id
+        ]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +29,9 @@ class StoreQuizAnswerRequest extends FormRequest
     public function rules()
     {
         return [
-            'answers' => 'required|array'
+            'answers' => 'required|array',
+            'correct_answer' => 'nullable|json',
+            'attempted_id' => 'exists:users,id',
         ];
     }
 }

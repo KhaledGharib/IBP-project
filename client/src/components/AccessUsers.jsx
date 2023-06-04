@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../axios-client";
+import { toast } from "react-toastify";
 
 export default function AccessUsers() {
   const [users, setUsers] = useState([]);
   const [checkedUsers, setCheckedUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
-
+  const navigate = useNavigate();
   let { id } = useParams();
 
   const [search, setSearch] = useState("");
@@ -96,6 +97,18 @@ export default function AccessUsers() {
       .put(`quiz/${quiz.id}`, accessUsersData)
       .then((response) => {
         console.log(accessUsersData);
+        toast.success("Updated", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          pauseOnFocusLoss: false,
+          theme: "colored",
+        });
+        navigate("/quizzes");
       })
       .catch((error) => {
         console.log(error);

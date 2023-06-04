@@ -1,10 +1,16 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../context/useStateContext";
 import axiosClient from "../axios-client";
 import AnnouncementView from "../components/AnnouncementView";
 
 export default function Announcement() {
+  const [users, setUsers] = useState([]);
+  const [checkedUsers, setCheckedUsers] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
   const titleRef = useRef();
   const { announcement, setAnnouncement, user } = useStateContext();
 
@@ -34,11 +40,66 @@ export default function Announcement() {
     }
   };
 
+  const filteredUsers = users.filter(
+    (user) => user.role === 0 && user.id.toString().includes(search)
+  );
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = () => {
+    setLoading(true);
+
+    axiosClient
+      .get("/users")
+      .then(({ data }) => {
+        setLoading(false);
+        setUsers(data.data);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleCheckboxChange = (event, user) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setCheckedUsers((prevCheckedUsers) => [...prevCheckedUsers, user]);
+      setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, user.id]);
+    } else {
+      setCheckedUsers((prevCheckedUsers) =>
+        prevCheckedUsers.filter((checkedUser) => checkedUser.id !== user.id)
+      );
+      setSelectedUsers((prevSelectedUsers) =>
+        prevSelectedUsers.filter((id) => id !== user.id)
+      );
+    }
+  };
+
+  const handleSelectAll = (event) => {
+    const isChecked = event.target.checked;
+    setSelectAll(isChecked);
+    if (isChecked) {
+      setCheckedUsers(filteredUsers);
+      const userIDs = filteredUsers.map((user) => user.id);
+      setSelectedUsers(userIDs);
+    } else {
+      setCheckedUsers([]);
+      setSelectedUsers([]);
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+    const accessUsersID = selectedUsers;
+
+    const accessUsersJson = JSON.stringify(accessUsersID);
+
     const payload = {
       title: titleRef.current.value,
       user_name: user.name,
+      access_users: accessUsersJson,
     };
     axiosClient
       .post("/announcements", payload)
@@ -90,17 +151,69 @@ export default function Announcement() {
         </div>
         <div id="cont" className="cont">
           <form onSubmit={onSubmit} className="container-fluid">
-            <div className="d-flex align-self-center justify-content-center gap-3 mt-4">
+            <div className="d-flex align-self-center justify-content-center gap-3 mt-4 pb-5">
               <input
+                placeholder="Announcement message"
                 ref={titleRef}
                 id="announcement"
-                className="w-50"
                 type="text"
-                // required
+                required
               />
-              <button className="btn btn-primary">
-                <i className="bi bi-send-fill"></i>
-              </button>
+            </div>
+            <h3 className="bg-light p-3 container-fluid">
+              Select students for announcement access
+            </h3>
+            <div className="container-fluid">
+              <div className="mb-3 d-flex gap-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search by User ID"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <button className="btn btn-primary">
+                  <i className="bi bi-send-fill"></i>
+                </button>
+              </div>
+              <div className="table-container">
+                <table className="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>
+                        <input
+                          type="checkbox"
+                          checked={selectAll}
+                          onChange={handleSelectAll}
+                        />
+                      </th>
+                      <th>User ID</th>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loading ? (
+                      <tr>
+                        <td colSpan="3">Loading users...</td>
+                      </tr>
+                    ) : (
+                      filteredUsers.map((user) => (
+                        <tr key={user.id}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={checkedUsers.includes(user)}
+                              onChange={(e) => handleCheckboxChange(e, user)}
+                            />
+                          </td>
+                          <td>{user.id}</td>
+                          <td>{user.name}</td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </form>
         </div>
