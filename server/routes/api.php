@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 });
+Route::post('messages', [ChatController::class, 'message']);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

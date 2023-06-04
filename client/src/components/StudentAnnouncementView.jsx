@@ -77,7 +77,7 @@ export default function AnnouncementView() {
                   <tr key={announcement.id}>
                     <td>{announcement.title}</td>
                     <td>{announcement.created_at}</td>
-                    <td>{announcement.user_id}</td>
+                    <td>{announcement.name}</td>
                     <td>
                       <button
                         className="btn btn-success"

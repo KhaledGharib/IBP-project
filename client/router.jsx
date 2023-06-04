@@ -1,13 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import AccessUsers from "./src/components/AccessUsers";
 import AdminLayout from "./src/components/AdminLayout";
-import AnnouncementView from "./src/components/AnnouncementView";
-import ChatPanel from "./src/components/ChatPanel";
+
 import GuestLayout from "./src/components/GuestLayout";
 import StudentAnnouncementView from "./src/components/StudentAnnouncementView";
 import UserLayout from "./src/components/UserLayout";
 import Announcement from "./src/views/Announcement";
-import Chat from "./src/views/Chat";
+
 import Dashboard from "./src/views/Dashboard";
 import Login from "./src/views/Login";
 import PageNotFound from "./src/views/PageNotFound";
@@ -19,6 +18,7 @@ import StudentQuizView from "./src/views/StudentQuizView";
 import UserForm from "./src/views/UserForm";
 import Users from "./src/views/Users";
 import Profile from "./src/views/profile";
+import Chat from "./src/views/Chat";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/chat",
-        element: <ChatPanel />,
+        element: <Chat />,
       },
       {
         path: "/quizzes",
@@ -90,6 +90,14 @@ const router = createBrowserRouter([
         path: "profile/:id",
         element: <Profile />,
       },
+      {
+        path: "quiz/public/:slug",
+        element: <StudentQuizView />,
+      },
+      {
+        path: "chat/:id",
+        element: <Chat />,
+      },
     ],
   },
 
@@ -104,10 +112,6 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
-      },
-      {
-        path: "/quiz/public/:slug",
-        element: <StudentQuizView />,
       },
     ],
   },

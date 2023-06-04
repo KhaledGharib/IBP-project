@@ -129,7 +129,7 @@ export default function UserLayout() {
               className={({ isActive }) =>
                 isActive ? "isActive" : "inactive "
               }
-              to="/chat/:id"
+              to={`chat/{user.id}`}
             >
               <i
                 className="bi bi-chat-dots-fill"
