@@ -26,6 +26,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|string|max:55',
             'role' => 'integer',
             'image' => 'string',
+            'owner_id' => 'exists:users,id',
             'email' => 'required|email|unique:users,email,' . $this->id,
             'password' => [
                 'confirmed',

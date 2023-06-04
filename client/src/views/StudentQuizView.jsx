@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../axios-client";
 import PublicQuestionView from "../components/PublicQuestionView";
 
 export default function SurveyPublicView() {
+  const navigate = useNavigate();
+
   const answers = {};
   const [quizFinished, setQuizFinished] = useState(false);
   const [quiz, setQuiz] = useState({
     questions: [],
   });
   const [loading, setLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
+  const [countdown, setCountdown] = useState(5);
   const { slug } = useParams();
 
   useEffect(() => {
@@ -39,24 +43,26 @@ export default function SurveyPublicView() {
         answers,
       })
       .then((response) => {
-        debugger;
-        setQuizFinished(true);
+        setShowLoading(true);
+        let timer = setInterval(() => {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
+
+        setTimeout(() => {
+          clearInterval(timer);
+          setQuizFinished(true);
+          navigate("/");
+        }, 3000);
       });
   }
 
   return (
-    <div
-      className="container
-    "
-    >
+    <div className="container">
       {loading && (
         <div className="d-flex justify-content-center">Loading..</div>
       )}
-      {!loading && (
-        <form
-          onSubmit={(ev) => onSubmit(ev)}
-          className="container rounded-4 p-4"
-        >
+      {!loading && !showLoading && (
+        <form onSubmit={onSubmit} className="container rounded-4 p-4">
           <div className="d-flex justify-content-between align-items-center gap-3">
             <h1 className="mb-3">{quiz.title}</h1>
             <p className="text-dark text-sm mb-3">
@@ -64,11 +70,7 @@ export default function SurveyPublicView() {
             </p>
           </div>
 
-          {quizFinished && (
-            <div className="text-dark">
-              Thank you for participating in the quiz
-            </div>
-          )}
+          {quizFinished && navigate("/")}
           {!quizFinished && (
             <>
               <div>
@@ -87,6 +89,15 @@ export default function SurveyPublicView() {
             </>
           )}
         </form>
+      )}
+      {showLoading && (
+        <div className="fs-4 d-flex justify-content-center align-items-center gap-4">
+          <p className="mt-2">Redirect after {countdown}</p>
+          <div
+            className="text-center spinner-border text-primary"
+            role="status"
+          ></div>
+        </div>
       )}
     </div>
   );

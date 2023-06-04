@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axiosClient from "../axios-client";
-
-export default function AccessUsers() {
+import { useStateContext } from "../../context/useStateContext";
+export default function AnnouncementAccessUsers() {
   const [users, setUsers] = useState([]);
   const [checkedUsers, setCheckedUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
 
   let { id } = useParams();
 
@@ -20,11 +21,12 @@ export default function AccessUsers() {
 
   useEffect(() => {
     setLoading(true);
+
     axiosClient
-      .get(`quiz/get-by-slug/${slug}`)
+      .get("/announcements")
       .then(({ data }) => {
         setLoading(false);
-        setQuiz(data.data);
+        setAnnouncements(data.data);
       })
       .catch(() => {
         setLoading(false);
@@ -88,12 +90,12 @@ export default function AccessUsers() {
     const accessUsersJson = JSON.stringify(accessUsersID);
 
     const accessUsersData = {
-      ...quiz,
+      ...announcements,
       access_users: accessUsersJson,
     };
 
     axiosClient
-      .put(`quiz/${quiz.id}`, accessUsersData)
+      .put(`announcements/${announcements.id}`, accessUsersData)
       .then((response) => {
         console.log(accessUsersData);
       })
@@ -105,7 +107,7 @@ export default function AccessUsers() {
   return (
     <>
       <h1 className="bg-light card p-3 container-fluid">
-        Select students to be able to access the {quiz.title} quiz
+        Select students to be able to access the {announcements.id}
       </h1>
 
       <form onSubmit={onSubmit}>

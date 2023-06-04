@@ -35,7 +35,8 @@ class UpdateQuizRequest extends FormRequest
             'status' => 'required|boolean',
             'description' => 'nullable|string',
             'expire_date' => 'nullable|date|after:today',
-            'questions' => 'array'
+            'questions' => 'array',
+            'access_users' => 'json'
         ];
     }
 }

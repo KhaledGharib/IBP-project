@@ -14,7 +14,12 @@ class StoreUserRequest extends FormRequest
     {
         return true;
     }
-
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'owner_id' => $this->user()->id
+        ]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,6 +29,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:55',
+            'owner_id' => 'exists:users,id',
             'email' => 'required|email|unique:users,email',
             'password' => [
                 'required',

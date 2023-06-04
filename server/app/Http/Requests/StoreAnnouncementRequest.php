@@ -13,7 +13,12 @@ class StoreAnnouncementRequest extends FormRequest
     {
         return true;
     }
-
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'owner_id' => $this->user()->id
+        ]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,7 +27,9 @@ class StoreAnnouncementRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'owner_id' => 'exists:users,id',
             'title' => 'required|string|max:55',
+            "access_users" => 'json'
         ];
     }
 }

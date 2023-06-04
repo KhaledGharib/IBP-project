@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
@@ -16,12 +17,15 @@ class UserController extends Controller
      * Display a listing of the resource.
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection  
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return UserResource::collection(
+        $user = $request->user();
 
-            User::query()->orderBy('id')->get()
+        return UserResource::collection(
+            User::where(function ($query) use ($user) {
+                $query->where('owner_id', $user->id);
+            })->orderBy('created_at', 'desc')->get()
         );
     }
 

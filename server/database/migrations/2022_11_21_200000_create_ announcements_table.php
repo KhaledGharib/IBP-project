@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class, 'owner_id');
             $table->string('title');
+            $table->json('access_users')->nullable();
             $table->timestamps();
         });
     }

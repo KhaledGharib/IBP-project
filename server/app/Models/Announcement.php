@@ -18,7 +18,8 @@ class Announcement extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        "title"
-
+        "title",
+        "access_users",
+        'owner_id',
     ];
 }

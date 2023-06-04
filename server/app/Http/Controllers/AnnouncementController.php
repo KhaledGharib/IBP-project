@@ -6,19 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAnnouncementRequest;
 use App\Http\Resources\AnnouncementResource;
 use App\Models\Announcement;
+use Symfony\Component\HttpFoundation\Request;
 
 class AnnouncementController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection  
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return AnnouncementResource::collection(
+        $user = $request->user();
 
-            Announcement::query()->orderBy('id')->get()
+        return AnnouncementResource::collection(
+            Announcement::where(function ($query) use ($user) {
+                $query->where('owner_id', $user->id)
+                    ->orWhereJsonContains('access_users', $user->id);
+            })->orderBy('created_at', 'desc')->get()
         );
     }
 
@@ -45,10 +51,9 @@ class AnnouncementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(Announcement $announcement)
     {
-        //
-
+        return new AnnouncementResource($announcement);
     }
 
     /**

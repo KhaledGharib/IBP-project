@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useStateContext } from "../../context/useStateContext";
 import axiosClient from "../axios-client";
 
@@ -77,12 +77,17 @@ export default function AnnouncementView() {
                   <td>{announcement.title}</td>
                   <td>{announcement.created_at}</td>
                   <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={(e) => onDelete(announcement)}
-                    >
-                      <i className="bi bi-trash3-fill"></i>
-                    </button>
+                    <div className="d-flex gap-4">
+                      <button
+                        className="btn btn-danger"
+                        onClick={(e) => onDelete(announcement)}
+                      >
+                        <i className="bi bi-trash3-fill"></i>
+                      </button>
+                      <NavLink to={`/access-users/${announcement.title}`}>
+                        <i className="bi bi-person-fill-add btn btn-success"></i>
+                      </NavLink>
+                    </div>
                   </td>
                 </tr>
               ))}

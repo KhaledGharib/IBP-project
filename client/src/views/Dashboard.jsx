@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosClient from "../axios-client";
 import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
+import Chat from "./Chat";
 import { AttendData, UserData } from "../components/UserData";
 export default function Dashboard() {
   const [quizzes, setQuiz] = useState([]);
@@ -181,6 +182,7 @@ export default function Dashboard() {
       >
         <div className="col shadow rounded-2">
           <h3>Chat box</h3>
+          <Chat />
         </div>
         <div className="col shadow rounded-2">
           <h3>Attendance chart</h3>
