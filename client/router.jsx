@@ -4,6 +4,7 @@ import AdminLayout from "./src/components/AdminLayout";
 import GuestLayout from "./src/components/GuestLayout";
 import StudentAnnouncementView from "./src/components/StudentAnnouncementView";
 import UserLayout from "./src/components/UserLayout";
+import AdminQuizView from "./src/views/AdminQuizView";
 import Announcement from "./src/views/Announcement";
 import Chat from "./src/views/Chat";
 import Dashboard from "./src/views/Dashboard";
@@ -66,10 +67,6 @@ const router = createBrowserRouter([
         path: "/profile/:id",
         element: <Profile />,
       },
-      {
-        path: "/quiz/public/:slug",
-        element: <StudentQuizView />,
-      },
     ],
   },
   {
@@ -89,16 +86,15 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "quiz/public/:slug",
-        element: <StudentQuizView />,
-      },
-      {
         path: "chat/:id",
         element: <Chat />,
       },
     ],
   },
-
+  {
+    path: "quiz/public/:slug",
+    element: <StudentQuizView />,
+  },
   {
     path: "/",
     element: <GuestLayout />,

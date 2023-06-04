@@ -52,7 +52,7 @@ export default function SurveyPublicView() {
         setTimeout(() => {
           clearInterval(timer);
           setQuizFinished(true);
-          navigate("/student");
+          navigate("/");
         }, 3000);
       });
   }

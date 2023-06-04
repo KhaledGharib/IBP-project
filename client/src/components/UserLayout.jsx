@@ -73,6 +73,9 @@ export default function UserLayout() {
       document.querySelector(".bi.bi-x-lg").style.display = "none";
     }
   };
+  if (user.role === 1) {
+    return <Navigate to={`/`} />;
+  }
 
   return (
     <>
@@ -83,7 +86,7 @@ export default function UserLayout() {
               <i className="bi bi-list"></i>
               <i className="bi bi-x-lg"></i>
             </button>
-            <h1 className="text-light">qlap</h1>
+            <h1 className="text-light">Qlap</h1>
           </div>
           <div className="d-flex align-items-center gap-3 text-light">
             <Link to="announcement" className="btn btn-info">
