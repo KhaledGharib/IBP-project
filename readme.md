@@ -1,14 +1,15 @@
 # Qlab 🧩
 
 ![React](https://img.shields.io/badge/React-18.2.0-blue?logo=react)
+![bootstrap](https://img.shields.io/badge/bootstrap-5-purple?logo=bootstrap)
 ![PHP](https://img.shields.io/badge/PHP-8.2.6-purple?logo=php)
 ![Composer](https://img.shields.io/badge/Composer-2.5.5-yellow?logo=composer)
-![MySQL](https://img.shields.io/badge/MySQL-10.4.28-blue?logo=mysql)
+![MySQL](https://img.shields.io/badge/MySQL-10.4.28-blue?logo=mysql&logoColor=white)
 ![npm](https://img.shields.io/badge/npm-20.2.0-red?logo=npm)
 ![Laravel](https://img.shields.io/badge/Laravel-9.40.1-red?logo=laravel)
 
 
-[presentation](https://youtu.be/8ZBABuujZ5Q)
+[presentation](https://youtu.be/Eth5UsyzOPg)
 
 ## Prerequisites
 
