@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -29,7 +30,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', function (Request $request) {
         return $request->user();
     });
+
+
+
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 });
+
+
 Route::post('messages', [ChatController::class, 'message']);
 
 Route::post('/signup', [AuthController::class, 'signup']);

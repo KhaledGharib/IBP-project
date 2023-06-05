@@ -4,12 +4,14 @@ import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
 import { AttendData, UserData } from "../components/UserData";
 import Chat from "./Chat";
+
 export default function Dashboard() {
-  const [quizzes, setQuiz] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [user, setUsers] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
 
   const [loading, setLoading] = useState(false);
+  const [dashData, setDashData] = useState({});
 
   const [data, setData] = useState({
     labels: UserData.map((data) => data.year),
@@ -20,9 +22,9 @@ export default function Dashboard() {
       },
     ],
   });
+
   const [attendData, setAttendData] = useState({
     labels: Object.keys(AttendData[0]),
-
     datasets: [
       {
         label: "Attendance",
@@ -45,9 +47,12 @@ export default function Dashboard() {
       },
     ],
   });
-  // ===============================
+
   useEffect(() => {
     getUser();
+    getQuizzes();
+    getAnnouncements();
+    getDashboardData();
   }, []);
 
   const getUser = () => {
@@ -57,7 +62,6 @@ export default function Dashboard() {
       .get("/users")
       .then(({ data }) => {
         setLoading(false);
-
         setUsers(data.data);
       })
       .catch(() => {
@@ -71,18 +75,10 @@ export default function Dashboard() {
     url = url || "/quiz";
     setLoading(true);
     axiosClient.get(url).then(({ data }) => {
-      setQuiz(data.data);
+      setQuizzes(data.data);
       setLoading(false);
     });
   };
-
-  useEffect(() => {
-    getQuizzes();
-  }, []);
-
-  useEffect(() => {
-    getAnnouncements();
-  }, []);
 
   const getAnnouncements = () => {
     setLoading(true);
@@ -98,7 +94,18 @@ export default function Dashboard() {
       });
   };
 
-  // ===============================
+  const getDashboardData = () => {
+    setLoading(true);
+    axiosClient
+      .get(`/dashboard`)
+      .then((res) => {
+        setLoading(false);
+        setDashData(res.data);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="container">
@@ -131,7 +138,9 @@ export default function Dashboard() {
                 <i className="bi bi-file-earmark-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p className="bold text-center text-dark fs-3">{quizzes.length}</p>
+            <p className="bold text-center text-dark fs-3">
+              {dashData.totalAnswers}
+            </p>
           </div>
         </div>
         <div className="col-md-6 col-lg-3 animated fadeInDown">
@@ -145,7 +154,9 @@ export default function Dashboard() {
                 <i className="bi bi-puzzle-fill fs-3 text-light"></i>
               </div>
             </div>
-            <p className="bold text-center text-dark fs-3">{quizzes.length}</p>
+            <p className="bold text-center text-dark fs-3">
+              {dashData.totalQuizzes}
+            </p>
           </div>
         </div>
         <div className="col-md-6 col-lg-3 animated fadeInDown">
@@ -179,7 +190,38 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="row" style={{ backgroundColor: "#fff" }}>
+      <div
+        className="row my-4"
+        style={{
+          backgroundColor: "#fff",
+          maxHeight: "300px",
+          overflowY: "scroll",
+        }}
+      >
+        {dashData.latestAnswers && dashData.latestAnswers.length > 0 ? (
+          <div className="text-left">
+            {dashData.latestAnswers.map((answer) => (
+              <a
+                href="#"
+                key={answer.id}
+                className="block p-2 hover:bg-gray-100/90"
+              >
+                <div className="font-semibold">{answer.quiz.title}</div>
+                <small>
+                  Answer Made at:{" "}
+                  <i className="font-semibold">{answer.end_date}</i>
+                </small>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="text-gray-600 text-center py-16">
+            You don't have any answers yet
+          </div>
+        )}
+      </div>
+
+      <div className="row my-4 py-4" style={{ backgroundColor: "#fff" }}>
         <div className="col-12">
           <h3>Chat box</h3>
           <Chat />
