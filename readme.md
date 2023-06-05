@@ -7,7 +7,6 @@
 ![npm](https://img.shields.io/badge/npm-20.2.0-red?logo=npm)
 ![Laravel](https://img.shields.io/badge/Laravel-9.40.1-red?logo=laravel)
 
-Qlap is a project developed as part of the IBP (Introduction to Business Programming) course.
 
 [presentation](https://youtu.be/8ZBABuujZ5Q)
 
