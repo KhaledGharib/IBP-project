@@ -9,7 +9,9 @@
 ![Laravel](https://img.shields.io/badge/Laravel-9.40.1-red?logo=laravel)
 
 
-[presentation](https://youtu.be/Eth5UsyzOPg)
+[long presentation 12min](https://youtu.be/Eth5UsyzOPg)
+
+[short presentation 6min](https://youtu.be/8ZBABuujZ5Q)
 
 ## Prerequisites
 
