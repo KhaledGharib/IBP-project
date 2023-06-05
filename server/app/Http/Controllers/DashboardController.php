@@ -16,13 +16,13 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        // Total Number of Surveys
+
         $total = Quiz::query()->where('owner_id', $user->id)->count();
 
-        // Latest Survey
+
         $latest = Quiz::query()->where('owner_id', $user->id)->latest('created_at')->first();
 
-        // Total Number of answers
+
         $totalAnswers = QuizAnswer::query()
             ->join('quizzes', 'quiz_answers.quiz_id', '=', 'quizzes.id')
             ->where('quizzes.owner_id', $user->id)

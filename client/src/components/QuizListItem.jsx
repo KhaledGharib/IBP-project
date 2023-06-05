@@ -11,7 +11,7 @@ export default function QuizListItem({ quiz, onDeleteClick }) {
         </div>
         <div className="d-flex gap-4 mt-4">
           <p className="mb-3">Expire Date: {quiz.expire_date}</p>
-          <p className="mb-3">Description{quiz.description}</p>
+          <p className="mb-3">Description: {quiz.description}</p>
         </div>
       </div>
       <div className="d-flex justify-content-between align-items-center gap-4">
