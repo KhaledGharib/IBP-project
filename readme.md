@@ -17,6 +17,7 @@ To run this project locally, you need the following:
 - Web server (e.g., Apache)
 - MySQL database
 #### You can use XAMPP to do all the above
+- and make sure you have the right versions as shown above
 
 ## Client ![My Skills](https://skillicons.dev/icons?i=react)
 
