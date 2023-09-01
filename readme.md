@@ -9,9 +9,12 @@
 ![Laravel](https://img.shields.io/badge/Laravel-9.40.1-red?logo=laravel)
 
 
-[long presentation 12min](https://youtu.be/Eth5UsyzOPg)
+<!---
 
+[long presentation 12min](https://youtu.be/Eth5UsyzOPg)
 [short presentation 6min](https://youtu.be/8ZBABuujZ5Q)
+-->
+
 
 ## Prerequisites
 
@@ -64,6 +67,7 @@ If you would like to contribute to Qlap, please follow these steps:
 3. Make your changes and commit them with descriptive messages.
 4. Push your changes to your forked repository.
 5. Submit a pull request, explaining your changes.
-
+<!---
 # Known Issues ⚠️
 Please note that this project may contain 🐛 and issues. I'm actively working 👨‍💻 on fixing them. Your understanding is appreciated.
+-->
