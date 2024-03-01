@@ -1,5 +1,5 @@
 # Qlab 🧩
-## Qlap is quizzes platforma 
+## Qlap is quizzes platform 
 
 ![React](https://img.shields.io/badge/React-18.2.0-blue?logo=react)
 ![bootstrap](https://img.shields.io/badge/bootstrap-5-purple?logo=bootstrap)
